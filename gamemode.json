@@ -1,0 +1,20 @@
+{
+  "Name": "CAPTURE",
+  "Description": "Захватывайте и защищайте зоны, чтобы получить приемущество в противоборстве двух команд.",
+  "StartClientVersion": 334,
+  "MapLists": [
+    {
+      "MapListId": 324,
+      "Name": "Официальные карты"
+    }
+  ],
+  "Parameters": {
+    "Bool": [
+      {
+        "Name": "MapRotation",
+        "DisplayName": "GmParams/MapRotation",
+        "Default": true
+      }
+    ]
+  }
+}
