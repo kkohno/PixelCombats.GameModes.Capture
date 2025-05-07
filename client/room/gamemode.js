@@ -357,7 +357,7 @@ Teams.OnPlayerChangeTeam.Add(function (player) { player.Spawns.Spawn() });
 var immortalityTimerName = "immortality";
 Spawns.GetContext().OnSpawn.Add(function (player) {
 	player.Properties.Immortality.Value = true;
-	timer = player.Timers.Get(immortalityTimerName).Restart(5);
+	player.Timers.Get(immortalityTimerName).Restart(5);
 });
 Timers.OnPlayerTimer.Add(function (timer) {
 	if (timer.Id != immortalityTimerName) return;
@@ -506,8 +506,6 @@ function RestartGame() {
 }
 
 function SpawnTeams() {
-	var e = Teams.GetEnumerator();
-	while (e.moveNext()) {
-		Spawns.GetContext(e.Current).Spawn();
-	}
+	for (const team of Teams)
+		Spawns.GetContext(team).Spawn();
 }
