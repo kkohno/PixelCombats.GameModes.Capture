@@ -1,4 +1,5 @@
 import { Map, AreaService, AreaViewService, Game, Players, Inventory, LeaderBoard, BuildBlocksSet, Teams, Damage, BreackGraph, Ui, Properties, GameMode, Spawns, Timers, TeamsBalancer, NewGame, NewGameVote } from 'pixel_combats/room';
+import * as teams from './default_teams.js';
 
 // настройки
 var WaitingPlayersTime = 10;
@@ -183,7 +184,7 @@ BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
 
 // создаем визуализацию зон защиты
 var defView = AreaViewService.GetContext().Get("DefView");
-defView.color = { b: 1 };
+defView.color = teams.RED_TEAM_COLOR;
 defView.Tags = [DefAreaTag];
 defView.Enable = true;
 
@@ -298,12 +299,8 @@ Properties.GetContext().GameModeName.Value = "GameModes/Team Dead Match";
 TeamsBalancer.IsAutoBalance = true;
 Ui.GetContext().MainTimerId.Value = mainTimer.Id;
 // создаем команд
-Teams.Add("Blue", "Teams/Blue", { b: 1 });
-Teams.Add("Red", "Teams/Red", { r: 1 });
-var blueTeam = Teams.Get("Blue");
-var redTeam = Teams.Get("Red");
-blueTeam.Spawns.SpawnPointsGroups.Add(1);
-redTeam.Spawns.SpawnPointsGroups.Add(2);
+var blueTeam = teams.create_team_blue();
+var redTeam = teams.create_team_red();
 blueTeam.Build.BlocksSet.Value = BuildBlocksSet.Blue;
 redTeam.Build.BlocksSet.Value = BuildBlocksSet.Red;
 
