@@ -1,4 +1,4 @@
-import { Game, Players, Inventory, LeaderBoard, BuildBlocksSet, Teams, Damage, BreackGraph, Ui, Properties, GameMode, Spawns, Timers, TeamsBalancer, NewGame, NewGameVote } from 'pixel_combats/room';
+import { AreaService, Game, Players, Inventory, LeaderBoard, BuildBlocksSet, Teams, Damage, BreackGraph, Ui, Properties, GameMode, Spawns, Timers, TeamsBalancer, NewGame, NewGameVote } from 'pixel_combats/room';
 
 // настройки
 var WaitingPlayersTime = 10;
@@ -48,7 +48,7 @@ var captureProperties = [];
 var capturedAreaIndexProp = Properties.GetContext().Get("RedCaptiredIndex");
 
 // задаем цвет всем зонам для захвата
-Map.OnLoad.Add(function() {
+Map.OnLoad.Add(function () {
 	InitializeDefAreas();
 });
 
@@ -63,7 +63,7 @@ function InitializeDefAreas() {
 	captureProperties = [];
 
 	// сортировка зон
-	captureAreas.sort(function(a, b) {
+	captureAreas.sort(function (a, b) {
 		if (a.Name > b.Name) return 1;
 		if (a.Name < b.Name) return -1;
 		return 0;
@@ -118,16 +118,16 @@ function CapturePropOnValue(prop) {
 function CaptureArea(index) {
 	if (index < 0 || index >= captureAreas.length) return;
 	captureViews[index].Color = CapturedColor;
-	if (index < captureProperties.length - 1) 
+	if (index < captureProperties.length - 1)
 		captureViews[index + 1].Enable = true;
 }
 // отмечает зону не захваченой красными
 function UnCaptureArea(index) {
 	if (index < 0 || index >= captureAreas.length) return;
 	//captureViews[index].Color = UnCapturedColor
-	if (index < captureProperties.length - 1 && captureProperties[index + 1].Value < CapturePoints) 
+	if (index < captureProperties.length - 1 && captureProperties[index + 1].Value < CapturePoints)
 		captureViews[index + 1].Enable = false;
-	if (index > 0 && captureProperties[index - 1].Value < CapturePoints) 
+	if (index > 0 && captureProperties[index - 1].Value < CapturePoints)
 		captureViews[index].Enable = false;
 }
 // задает или снимает спавнпоинты захваченой области
@@ -141,7 +141,7 @@ function SetSpawnIndex() {
 	capturedAreaIndexProp.Value = maxIndex;
 }
 // при смене индекса захвата
-capturedAreaIndexProp.OnValue.Add(function(prop) {
+capturedAreaIndexProp.OnValue.Add(function (prop) {
 	var index = prop.Value;
 	var spawns = Spawns.GetContext(redTeam);
 	// очистка спавнов
@@ -157,7 +157,7 @@ capturedAreaIndexProp.OnValue.Add(function(prop) {
 	var lookPoint = {};
 	if (index < captureAreas.length - 1) lookPoint = captureAreas[index + 1].Ranges.GetAveragePosition();
 	else {
-		if (defAreas.length > 0) 
+		if (defAreas.length > 0)
 			lookPoint = defAreas[0].Ranges.GetAveragePosition();
 	}
 
@@ -183,14 +183,14 @@ BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
 
 // создаем визуализацию зон защиты
 var defView = AreaViewService.GetContext().Get("DefView");
-defView.color={b:1};
-defView.Tags = [ DefAreaTag ];
+defView.color = { b: 1 };
+defView.Tags = [DefAreaTag];
 defView.Enable = true;
 
 // создаем триггер зон защиты
 var defTrigger = AreaPlayerTriggerService.Get("DefTrigger");
 defTrigger.Tags = [DefAreaTag];
-defTrigger.OnEnter.Add(function(player) {
+defTrigger.OnEnter.Add(function (player) {
 	if (player.Team == blueTeam) {
 		player.Ui.Hint.Value = DefThisAreaHint;
 		return;
@@ -203,13 +203,13 @@ defTrigger.OnEnter.Add(function(player) {
 		return;
 	}
 });
-defTrigger.OnExit.Add(function(player) {
+defTrigger.OnExit.Add(function (player) {
 	player.Ui.Hint.Reset();
 });
 defTrigger.Enable = true;
 
 // задаем обработчик таймера триггера
-defTickTimer.OnTimer.Add(function(timer) {
+defTickTimer.OnTimer.Add(function (timer) {
 	DefTriggerUpdate();
 	CaptureTriggersUpdate();
 });
@@ -344,7 +344,7 @@ LeaderBoard.TeamLeaderBoardValue = {
 	ShortDisplayName: "Statistics\Deaths"
 };
 // вес игрока в лидерборде
-LeaderBoard.PlayersWeightGetter.Set(function(player) {
+LeaderBoard.PlayersWeightGetter.Set(function (player) {
 	return player.Properties.Get("Kills").Value;
 });
 
@@ -352,38 +352,38 @@ LeaderBoard.PlayersWeightGetter.Set(function(player) {
 Ui.GetContext().TeamProp1.Value = { Team: "Blue", Prop: "Deaths" };
 
 // разрешаем вход в команды по запросу
-Teams.OnRequestJoinTeam.Add(function(player,team){team.Add(player);});
+Teams.OnRequestJoinTeam.Add(function (player, team) { team.Add(player); });
 // спавн по входу в команду
-Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()});
+Teams.OnPlayerChangeTeam.Add(function (player) { player.Spawns.Spawn() });
 
 // делаем игроков неуязвимыми после спавна
-var immortalityTimerName="immortality";
-Spawns.GetContext().OnSpawn.Add(function(player){
-	player.Properties.Immortality.Value=true;
-	timer=player.Timers.Get(immortalityTimerName).Restart(5);
+var immortalityTimerName = "immortality";
+Spawns.GetContext().OnSpawn.Add(function (player) {
+	player.Properties.Immortality.Value = true;
+	timer = player.Timers.Get(immortalityTimerName).Restart(5);
 });
-Timers.OnPlayerTimer.Add(function(timer){
-	if(timer.Id!=immortalityTimerName) return;
-	timer.Player.Properties.Immortality.Value=false;
+Timers.OnPlayerTimer.Add(function (timer) {
+	if (timer.Id != immortalityTimerName) return;
+	timer.Player.Properties.Immortality.Value = false;
 });
 
 // если в команде количество смертей занулилось то завершаем игру
-Properties.OnTeamProperty.Add(function(context, value) {
+Properties.OnTeamProperty.Add(function (context, value) {
 	if (context.Team != blueTeam) return;
 	if (value.Name !== "Deaths") return;
 	if (value.Value <= 0) RedWin();
 });
 
 // счетчик спавнов
-Spawns.OnSpawn.Add(function(player) {
+Spawns.OnSpawn.Add(function (player) {
 	++player.Properties.Spawns.Value;
 });
 // счетчик смертей
-Damage.OnDeath.Add(function(player) {
+Damage.OnDeath.Add(function (player) {
 	++player.Properties.Deaths.Value;
 });
 // счетчик убийств
-Damage.OnKill.Add(function(player, killed) {
+Damage.OnKill.Add(function (player, killed) {
 	if (killed.Team != null && killed.Team != player.Team) {
 		++player.Properties.Kills.Value;
 		player.Properties.Scores.Value += 100;
@@ -391,20 +391,20 @@ Damage.OnKill.Add(function(player, killed) {
 });
 
 // настройка переключения режимов
-mainTimer.OnTimer.Add(function() {
+mainTimer.OnTimer.Add(function () {
 	switch (stateProp.Value) {
-	case WaitingStateValue:
-		SetBuildMode();
-		break;
-	case BuildModeStateValue:
-		SetGameMode();
-		break;
-	case GameStateValue:
-		BlueWin();
-		break;
-	case EndOfMatchStateValue:
-		RestartGame();
-		break;
+		case WaitingStateValue:
+			SetBuildMode();
+			break;
+		case BuildModeStateValue:
+			SetGameMode();
+			break;
+		case GameStateValue:
+			BlueWin();
+			break;
+		case EndOfMatchStateValue:
+			RestartGame();
+			break;
 	}
 });
 
@@ -419,8 +419,7 @@ function SetWaitingMode() {
 	mainTimer.Restart(WaitingPlayersTime);
 }
 
-function SetBuildMode() 
-{
+function SetBuildMode() {
 	// инициализация режима
 	for (var i = 0; i < captureAreas.length; ++i) {
 		// визуализатор
@@ -460,8 +459,7 @@ function SetBuildMode()
 	Spawns.GetContext().enable = true;
 	SpawnTeams();
 }
-function SetGameMode() 
-{
+function SetGameMode() {
 	stateProp.Value = GameStateValue;
 	//Ui.GetContext().Hint.Value = "Hint/AttackEnemies";
 	blueTeam.Ui.Hint.Value = DefBlueAreaHint;
@@ -486,8 +484,7 @@ function SetGameMode()
 	Spawns.GetContext().Despawn();
 	SpawnTeams();
 }
-function BlueWin()
-{
+function BlueWin() {
 	stateProp.Value = EndOfMatchStateValue;
 	Ui.GetContext().Hint.Value = "Hint/EndOfMatch";
 
@@ -497,8 +494,7 @@ function BlueWin()
 	Game.GameOver(blueTeam);
 	mainTimer.Restart(EndOfMatchTime);
 }
-function RedWin()
-{
+function RedWin() {
 	stateProp.Value = EndOfMatchStateValue;
 	Ui.GetContext().Hint.Value = "Hint/EndOfMatch";
 
