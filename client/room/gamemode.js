@@ -220,7 +220,7 @@ function DefTriggerUpdate() {
 	// поиск количества синих и красных в триггере
 	var blueCount = 0;
 	var redCount = 0;
-	players = defTrigger.GetPlayers();
+	var players = defTrigger.GetPlayers();
 	for (var i = 0; i < players.length; ++i) {
 		var p = players[i];
 		if (p.Team == blueTeam) ++blueCount;
