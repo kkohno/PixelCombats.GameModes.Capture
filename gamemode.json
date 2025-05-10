@@ -14,6 +14,18 @@
         "Name": "MapRotation",
         "DisplayName": "GmParams/MapRotation",
         "Default": true
+      },
+      {
+        "Name": "PartialDesruction",
+        "DisplayName": "GmParams/OnlyPlayerBlocksDmg",
+      },
+      {
+        "Name": "LoosenBlocks",
+        "DisplayName": "GmParams/LoosenBlocks",
+      },
+      {
+        "Name": "FriendlyFire",
+        "DisplayName": "GmParams/FriendlyFire",
       }
     ]
   }
