@@ -185,7 +185,7 @@ BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
 
 // создаем визуализацию зон защиты
 const defView = AreaViewService.GetContext().Get("DefView");
-defView.color = new Color(teams.RED_TEAM_COLOR.r, teams.RED_TEAM_COLOR.g, teams.RED_TEAM_COLOR.rb);
+defView.color = new Color(teams.RED_TEAM_COLOR.r, teams.RED_TEAM_COLOR.g, teams.RED_TEAM_COLOR.b);
 defView.Tags = [DefAreaTag];
 defView.Enable = true;
 
