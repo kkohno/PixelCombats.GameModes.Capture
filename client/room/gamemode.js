@@ -152,9 +152,7 @@ capturedAreaIndexProp.OnValue.Add(function (prop) {
 	if (index < 0 || index >= captureAreas.length) return;
 	// задаем спавны
 	var area = captureAreas[index];
-	var iter = area.Ranges.GetEnumerator();
-	iter.MoveNext();
-	var range = iter.Current;
+	var range = area.Ranges.All[0];
 	// определяем куда смотреть спавнам
 	var lookPoint = {};
 	if (index < captureAreas.length - 1) lookPoint = captureAreas[index + 1].Ranges.GetAveragePosition();
