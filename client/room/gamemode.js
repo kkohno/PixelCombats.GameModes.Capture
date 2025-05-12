@@ -103,11 +103,11 @@ function CapturePropOnValue(prop) {
 		// красим в фейковую закраску
 		var d = prop.Value / MaxCapturePoints;
 		if (index >= 0) {
-			captureViews[index].Color = {
-				r: (FakeCapturedColor.r - UnCapturedColor.r) * d + UnCapturedColor.r,
-				g: (FakeCapturedColor.g - UnCapturedColor.g) * d + UnCapturedColor.g,
-				b: (FakeCapturedColor.b - UnCapturedColor.b) * d + UnCapturedColor.b
-			};
+			captureViews[index].Color = new Color(
+				(FakeCapturedColor.r - UnCapturedColor.r) * d + UnCapturedColor.r,
+				(FakeCapturedColor.g - UnCapturedColor.g) * d + UnCapturedColor.g,
+				(FakeCapturedColor.b - UnCapturedColor.b) * d + UnCapturedColor.b
+			);
 		}
 		// снятие захвата
 		UnCaptureArea(index);
