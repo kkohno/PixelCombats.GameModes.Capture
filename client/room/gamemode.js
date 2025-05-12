@@ -19,7 +19,7 @@ var BlueCaptureW = 2;		// вес синих при захвате спавна
 var CaptureRestoreW = 1;	// сколько очков отнимается, если нет красных в зоне для захвата
 const UnCapturedColor = new Color(1, 1, 1, 0);
 const FakeCapturedColor = new Color(0, 1, 0, 0); // к какому цвету стремится зона при ее захвате
-var CapturedColor = { r: 1 };
+var CapturedColor = teams.RED_TEAM_COLOR;
 var MaxSpawnsByArea = 25;	// макс спавнов на зону
 
 // константы
@@ -119,7 +119,7 @@ function CapturePropOnValue(prop) {
 // отмечает зону захваченой красными
 function CaptureArea(index) {
 	if (index < 0 || index >= captureAreas.length) return;
-	captureViews[index].Color = new Color(CapturedColor.r, CapturedColor.g, CapturedColor.b);
+	captureViews[index].Color = CapturedColor;
 	if (index < captureProperties.length - 1)
 		captureViews[index + 1].Enable = true;
 }
