@@ -119,7 +119,7 @@ function CapturePropOnValue(prop) {
 // отмечает зону захваченой красными
 function CaptureArea(index) {
 	if (index < 0 || index >= captureAreas.length) return;
-	captureViews[index].Color = CapturedColor;
+	captureViews[index].Color = new Color(CapturedColor.r, CapturedColor.g, CapturedColor.b);
 	if (index < captureProperties.length - 1)
 		captureViews[index + 1].Enable = true;
 }
@@ -185,7 +185,7 @@ BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
 
 // создаем визуализацию зон защиты
 const defView = AreaViewService.GetContext().Get("DefView");
-defView.color = teams.RED_TEAM_COLOR;
+defView.color = new Color(teams.RED_TEAM_COLOR.r, teams.RED_TEAM_COLOR.g, teams.RED_TEAM_COLOR.rb);
 defView.Tags = [DefAreaTag];
 defView.Enable = true;
 
