@@ -423,7 +423,7 @@ function SetBuildMode() {
 		// визуализатор
 		var view = captureViews[i];
 		view.Area = captureAreas[i];
-		view.Color = UnCapturedColor;
+		view.Color = new Color(UnCapturedColor.r, UnCapturedColor.g, UnCapturedColor.b, 0);
 		view.Enable = i == 0;
 		// триггер
 		var trigger = captureTriggers[i];
