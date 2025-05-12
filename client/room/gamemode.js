@@ -106,7 +106,8 @@ function CapturePropOnValue(prop) {
 			captureViews[index].Color = new Color(
 				(FakeCapturedColor.r - UnCapturedColor.r) * d + UnCapturedColor.r,
 				(FakeCapturedColor.g - UnCapturedColor.g) * d + UnCapturedColor.g,
-				(FakeCapturedColor.b - UnCapturedColor.b) * d + UnCapturedColor.b
+				(FakeCapturedColor.b - UnCapturedColor.b) * d + UnCapturedColor.b,
+				0
 			);
 		}
 		// снятие захвата
