@@ -184,13 +184,13 @@ BreackGraph.OnlyPlayerBlocksDmg = GameMode.Parameters.GetBool("PartialDesruction
 BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
 
 // создаем визуализацию зон защиты
-var defView = AreaViewService.GetContext().Get("DefView");
+const defView = AreaViewService.GetContext().Get("DefView");
 defView.color = teams.RED_TEAM_COLOR;
 defView.Tags = [DefAreaTag];
 defView.Enable = true;
 
 // создаем триггер зон защиты
-var defTrigger = AreaPlayerTriggerService.Get("DefTrigger");
+const defTrigger = AreaPlayerTriggerService.Get("DefTrigger");
 defTrigger.Tags = [DefAreaTag];
 defTrigger.OnEnter.Add(function (player) {
 	if (player.Team == blueTeam) {
