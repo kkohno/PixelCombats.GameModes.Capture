@@ -221,7 +221,7 @@ function DefTriggerUpdate() {
 	// поиск количества синих и красных в триггере
 	var blueCount = 0;
 	var redCount = 0;
-	var players = defTrigger.GetPlayers();
+	const players = defTrigger.GetPlayers();
 	for (var i = 0; i < players.length; ++i) {
 		var p = players[i];
 		if (p.Team == blueTeam) ++blueCount;
@@ -255,11 +255,11 @@ function CaptureTriggersUpdate() {
 	// обновление
 	for (var i = 0; i < captureTriggers.length; ++i) {
 		// берем триггер
-		var trigger = captureTriggers[i];
+		const trigger = captureTriggers[i];
 		// поиск количества синих и красных в триггере
 		var blueCount = 0;
 		var redCount = 0;
-		players = trigger.GetPlayers();
+		const players = trigger.GetPlayers();
 		for (var j = 0; j < players.length; ++j) {
 			var p = players[j];
 			if (p.Team == blueTeam) ++blueCount;
